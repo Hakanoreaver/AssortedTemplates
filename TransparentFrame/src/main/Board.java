@@ -1,12 +1,11 @@
 package main;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 /**
  * Created by Hakanoreaver on 30/6/18.
@@ -15,14 +14,14 @@ public class Board extends MotionPanel implements ActionListener {
     Timer t;
     ImageIcon ii = new ImageIcon(getClass().getResource("ClockImage.png"));
     Image i = ii.getImage();
-    int minutes = 0, hours= 0, seconds = 0;
+    int minutes = 0, hours = 0, seconds = 0;
     String time = "";
-    Font f1= new Font("Digital-7" ,Font.BOLD,40);
+    Font f1 = new Font("Palatino Linotype", Font.BOLD, 40);
 
     public Board(JFrame parent) {
         super(parent);
-        setSize(new Dimension(400,400));
-        this.setBackground(new Color(0,0,0,0));
+        setSize(new Dimension(400, 400));
+        this.setBackground(new Color(0, 0, 0, 0));
         Timer t = new Timer(1000, this);
         t.start();
     }
