@@ -13,13 +13,19 @@ public class Main extends JFrame{
     }
 
     private void initUI() {
-        this.setSize(400, 400);
+        this.setSize(299, 225);
         this.setResizable(false);
         this.setTitle("Display a White Circle");
+        this.setLayout(new CardLayout());
         this.setUndecorated(true);
         Board b = new Board(this);
-        b.setSize(new Dimension(400,400));
-        this.add(b);
+        LogIn l = new LogIn(this);
+        l.setSize(new Dimension(299,225));
+        b.setSize(new Dimension(299,225));
+
+        this.add(l, "LogIn");
+        this.add(b, "ServerStatus");
+
        AWTUtilities.setWindowOpaque(this, false);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

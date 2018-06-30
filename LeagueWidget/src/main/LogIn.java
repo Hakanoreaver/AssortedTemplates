@@ -20,24 +20,38 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
-/**
- * Created by Hakanoreaver on 30/6/18.
- */
-public class Board extends MotionPanel implements ActionListener {
+public class LogIn extends MotionPanel implements ActionListener {
     Timer t;
     ImageIcon ii = new ImageIcon(getClass().getResource("LeagueWidget.png"));
     Image i = ii.getImage();
     String clientStatus, serverStatus;
     boolean setUp = false;
     Font f1 = new Font("Palatino Linotype", Font.BOLD, 18);
+    JComboBox<String> region;
+    JTextField username;
 
-    public Board(JFrame parent) {
+    public LogIn(JFrame parent) {
         super(parent);
+        this.setLayout(null);
         setSize(new Dimension(i.getHeight(this), i.getWidth(this)));
         this.setBackground(new Color(0, 0, 0, 0));
+        initComponents();
         update();
         Timer t = new Timer(60000, this);
         t.start();
+    }
+
+    private void initComponents() {
+        JLabel userName = new JLabel("Summoner Name");
+        userName.setBounds(30, 110, 120, 20);
+        String[] strings = {"Oceania", "North America"};
+        region = new JComboBox<>(strings);
+        region.setBounds(70, 60, 160, 40);
+        username = new JFormattedTextField();
+        username.setBounds(160, 110, 100, 20);
+        this.add(region);
+        this.add(username);
+        this.add(userName);
     }
 
     private void update() {
@@ -81,7 +95,7 @@ public class Board extends MotionPanel implements ActionListener {
         g.setColor(new Color(40,75,65));
         g.drawImage(i, 0,0,this);
         g.setFont(f1);
-        g.drawString(clientStatus, 30, 40);
+        g.drawString("rekt", 30, 40);
         g.drawString(serverStatus, 30, 70);
     }
 }
