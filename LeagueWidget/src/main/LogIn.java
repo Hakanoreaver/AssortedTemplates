@@ -26,9 +26,10 @@ public class LogIn extends MotionPanel implements ActionListener {
     Image i = ii.getImage();
     String clientStatus, serverStatus;
     boolean setUp = false;
-    Font f1 = new Font("Palatino Linotype", Font.BOLD, 18);
+    Font f1 = new Font("Palatino Linotype", Font.BOLD, 11);
     JComboBox<String> region;
     JTextField username;
+    JButton logIn;
 
     public LogIn(JFrame parent) {
         super(parent);
@@ -43,15 +44,29 @@ public class LogIn extends MotionPanel implements ActionListener {
 
     private void initComponents() {
         JLabel userName = new JLabel("Summoner Name");
-        userName.setBounds(30, 110, 120, 20);
+        userName.setBounds(30, 100, 95, 20);
+        userName.setFont(f1);
+        userName.setForeground(new Color(40,75,65));
         String[] strings = {"Oceania", "North America"};
         region = new JComboBox<>(strings);
-        region.setBounds(70, 60, 160, 40);
+        region.setBounds(70, 50, 160, 40);
+        region.setFont(f1);
         username = new JFormattedTextField();
-        username.setBounds(160, 110, 100, 20);
+        username.setBounds(140, 100, 120, 20);
+        username.setFont(f1);
+        logIn = new JButton("Log In");
+        logIn.setBounds(100, 140, 80, 20);
+        logIn.setFont(f1);
+        logIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
         this.add(region);
         this.add(username);
         this.add(userName);
+        this.add(logIn);
     }
 
     private void update() {
@@ -92,10 +107,6 @@ public class LogIn extends MotionPanel implements ActionListener {
     }
 
     public void drawObjects(Graphics g) {
-        g.setColor(new Color(40,75,65));
         g.drawImage(i, 0,0,this);
-        g.setFont(f1);
-        g.drawString("rekt", 30, 40);
-        g.drawString(serverStatus, 30, 70);
     }
 }
