@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
@@ -27,23 +28,41 @@ public class Board extends MotionPanel implements ActionListener {
     Timer t;
     ImageIcon ii = new ImageIcon(getClass().getResource("LeagueWidget.png"));
     Image i = ii.getImage();
-    String clientStatus, serverStatus;
+    String clientStatus = "", serverStatus = "";
     boolean setUp = false;
     Font f1 = new Font("Palatino Linotype", Font.BOLD, 18);
+    String APIKey = "RGAPI-e2847315-d0e5-40b5-a5f4-809dc9f56ccb";
+    String ping = "";
 
     public Board(JFrame parent) {
         super(parent);
         setSize(new Dimension(i.getHeight(this), i.getWidth(this)));
         this.setBackground(new Color(0, 0, 0, 0));
         update();
-        Timer t = new Timer(60000, this);
+        Timer t = new Timer(10000, this);
         t.start();
     }
 
     private void update() {
         try {
+            String ipAddress = "203.174.139.185";
+            InetAddress inet = InetAddress.getByName(ipAddress);
+            long finish = 0;
+            long start = new GregorianCalendar().getTimeInMillis();
+
+            if (inet.isReachable(5000)){
+                finish = new GregorianCalendar().getTimeInMillis();
+                ping = (finish - start) + "ms";
+            } else {
+                ping = "undefined";
+            }
+        } catch ( Exception e ) {
+            System.out.println("Exception:" + e.getMessage());
+        }
+
+        try {
             URL url;
-            url = new URL("https://oc1.api.riotgames.com/lol/status/v3/shard-data?api_key=RGAPI-04513ec0-5282-47ba-9cfd-9e2dd8f1d77a");
+            url = new URL("https://oc1.api.riotgames.com/lol/status/v3/shard-data?api_key=" + APIKey);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             int status = con.getResponseCode();
@@ -60,7 +79,8 @@ public class Board extends MotionPanel implements ActionListener {
 
 
             } catch (ParseException e) {
-                e.printStackTrace();
+                clientStatus = "Error";
+                serverStatus = "Error";
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -83,5 +103,6 @@ public class Board extends MotionPanel implements ActionListener {
         g.setFont(f1);
         g.drawString(clientStatus, 30, 40);
         g.drawString(serverStatus, 30, 70);
+        g.drawString(ping, 30, 100);
     }
 }

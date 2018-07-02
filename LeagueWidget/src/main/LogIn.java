@@ -55,14 +55,19 @@ public class LogIn extends MotionPanel implements ActionListener {
         username.setBounds(140, 100, 120, 20);
         username.setFont(f1);
         logIn = new JButton("Log In");
-        logIn.setBounds(100, 140, 80, 20);
+        logIn.setBounds(95, 140, 110, 30);
+        logIn.setIcon(new ImageIcon(getClass().getResource("AcceptButton.png")));
         logIn.setFont(f1);
         logIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                Main.switchView("ServerStatus");
             }
         });
+        logIn.setOpaque(false);
+        logIn.setContentAreaFilled(false);
+        logIn.setBorderPainted(false);
+        logIn.setFocusPainted(false);
         this.add(region);
         this.add(username);
         this.add(userName);
@@ -70,30 +75,6 @@ public class LogIn extends MotionPanel implements ActionListener {
     }
 
     private void update() {
-        try {
-            URL url;
-            url = new URL("https://oc1.api.riotgames.com/lol/status/v3/shard-data?api_key=RGAPI-04513ec0-5282-47ba-9cfd-9e2dd8f1d77a");
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            int status = con.getResponseCode();
-            try {
-                JSONParser jsonParser = new JSONParser();
-                JSONObject jsonObject = (JSONObject) jsonParser.parse(
-                        new InputStreamReader(con.getInputStream(), "UTF-8"));
-                System.out.println(jsonObject);
-                JSONArray a = (JSONArray) jsonObject.get("services");
-                JSONObject b = (JSONObject) a.get(0);
-                JSONObject c = (JSONObject) a.get(3);
-                clientStatus = (String) b.get("status");
-                serverStatus = (String) c.get("status");
-
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
     public void actionPerformed(ActionEvent e) {
         update();
